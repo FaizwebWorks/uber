@@ -44,8 +44,6 @@ module.exports.loginUser = async (req, res, next) => {
   }
 
   const token = user.generateAuthToken();
-  console.log("User found:", user);
-  console.log("Hashed password:", user.password);
 
   res.status(200).json({ token, user });
 };
