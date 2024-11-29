@@ -55,9 +55,9 @@ The frontend needs to send the following data in the request body as JSON:
 
 **Response:**
 
-| Status Code | Description                   | Response Body                                                                         |
-| ----------- | ----------------------------- | ------------------------------------------------------------------------------------- |
-| 201         | User successfully registered. | `{ "token": "eyJIXVCJ9...", "user": { ... } }`                                        |
+| Status Code | Description                   | Response Body                                                                           |
+| ----------- | ----------------------------- | --------------------------------------------------------------------------------------- |
+| 201         | User successfully registered. | `{ "token": "eyJIXVCJ9...", "user": { ... } }`                                          |
 | 400         | Validation error.             | `{ "errors": [ { "msg": "Invalid Email", { "msg": "First name must at..." }, ... } ] }` |
 
 **Example Success Response:**
@@ -82,9 +82,82 @@ The frontend needs to send the following data in the request body as JSON:
 {
   "errors": [
     { "msg": "Invalid Email" },
-    { "msg": "First name must at least 3 characters long" },
-    { "msg": "Password must be at least 6 characters long" }
+    { "msg": "First name must at least 3 characters" },
+    { "msg": "Password must be at least 6 characters" }
   ]
+}
+```
+
+### 2. **Login User**
+
+**Endpoint:**  
+`POST /login`
+
+**Description:**  
+This endpoint logs in an existing user by verifying their email & password.
+
+**Request Body:**  
+The frontend needs to send the following data in the request body as JSON:
+
+| Field      | Type   | Required | Description                                    |
+| ---------- | ------ | -------- | ---------------------------------------------- |
+| `email`    | String | Yes      | The user's email address (valid email format). |
+| `password` | String | Yes      | The user's password (min length: 6).           |
+
+**Example Request Body:**
+
+```json
+{
+  "email": "johndoe@example.com",
+  "password": "securePassword123"
+}
+```
+
+**Validation Rules:**
+
+- `email` must be a valid email.
+- `password` must have at least 6 characters.
+
+**Response:**
+
+| Status Code | Description                | Response Body                                                                           |
+| ----------- | -------------------------- | --------------------------------------------------------------------------------------- |
+| 201         | Login successful.          | `{ "token": "eyJIXVCJ9...", "user": { ... } }`                                          |
+| 400         | Validation error.          | `{ "errors": [ { "msg": "Invalid Email", { "msg": "First name must at..." }, ... } ] }` |
+| 401         | Invalid email or password. | `{ "message": "Invalid email or password" }`                                            |
+
+**Example Success Response:**
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "_id": "63f2d1234abc1234abc5678",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "johndoe@example.com"
+  }
+}
+```
+
+**Example Error Response (Validation):**
+
+```json
+{
+  "errors": [
+    { "msg": "Invalid Email" },
+    { "msg": "Password must be at least 6 characters" }
+  ]
+}
+```
+
+**Example Error Response (Invalid Login):**
+
+```json
+{
+  "message": "Invalid email or password"
 }
 ```
 
