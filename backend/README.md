@@ -55,8 +55,8 @@ The frontend needs to send the following data in the request body as JSON:
 
 | Status Code | Description                   | Response Body                                  |
 |-------------|-------------------------------|-----------------------------------------------|
-| 201         | User successfully registered. | `{ "token": "<JWT_TOKEN>", "user": { ... } }` |
-| 400         | Validation error.             | `{ "errors": [ { "msg": "<error_message>" } ] }` |
+| 201         | User successfully registered. | `{ "token": "eyJIXVCJ9...", "user": { ... } }` |
+| 400         | Validation error.             | `{ "errors": [ { "msg": "Invalid Email", {"msg": "First name must at..."}, ... } ] }` |
 
 **Example Success Response:**
 ```json
