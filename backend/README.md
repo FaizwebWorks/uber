@@ -1,4 +1,3 @@
-
 # API Documentation
 
 This document outlines the APIs for the backend and provides details on how the frontend should interact with them.
@@ -8,6 +7,7 @@ This document outlines the APIs for the backend and provides details on how the 
 ## Base URL
 
 All APIs are prefixed with `/users`. For example:
+
 ```
 http://localhost:8000/users
 ```
@@ -27,14 +27,15 @@ This endpoint registers a new user in the system.
 **Request Body:**  
 The frontend needs to send the following data in the request body as JSON:
 
-| Field                  | Type   | Required | Description                                   |
-|------------------------|--------|----------|-----------------------------------------------|
-| `fullname.firstname`   | String | Yes      | The user's first name (min length: 3).        |
-| `fullname.lastname`    | String | No       | The user's last name (min length: 3).         |
-| `email`                | String | Yes      | The user's email address (valid email format).|
-| `password`             | String | Yes      | The user's password (min length: 6).          |
+| Field                | Type   | Required | Description                                    |
+| -------------------- | ------ | -------- | ---------------------------------------------- |
+| `fullname.firstname` | String | Yes      | The user's first name (min length: 3).         |
+| `fullname.lastname`  | String | No       | The user's last name (min length: 3).          |
+| `email`              | String | Yes      | The user's email address (valid email format). |
+| `password`           | String | Yes      | The user's password (min length: 6).           |
 
 **Example Request Body:**
+
 ```json
 {
   "fullname": {
@@ -46,19 +47,21 @@ The frontend needs to send the following data in the request body as JSON:
 }
 ```
 
-**Validation Rules:**  
+**Validation Rules:**
+
 - `email` must be a valid email.
 - `fullname.firstname` must have at least 3 characters.
 - `password` must have at least 6 characters.
 
 **Response:**
 
-| Status Code | Description                   | Response Body                                  |
-|-------------|-------------------------------|-----------------------------------------------|
-| 201         | User successfully registered. | `{ "token": "eyJIXVCJ9...", "user": { ... } }` |
-| 400         | Validation error.             | `{ "errors": [ { "msg": "Invalid Email", {"msg": "First name must at..."}, ... } ] }` |
+| Status Code | Description                   | Response Body                                                                         |
+| ----------- | ----------------------------- | ------------------------------------------------------------------------------------- |
+| 201         | User successfully registered. | `{ "token": "eyJIXVCJ9...", "user": { ... } }`                                        |
+| 400         | Validation error.             | `{ "errors": [ { "msg": "Invalid Email", { "msg": "First name must at..." }, ... } ] }` |
 
 **Example Success Response:**
+
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -74,6 +77,7 @@ The frontend needs to send the following data in the request body as JSON:
 ```
 
 **Example Error Response (Validation):**
+
 ```json
 {
   "errors": [
@@ -91,11 +95,13 @@ The frontend needs to send the following data in the request body as JSON:
 1. **CORS:**  
    The backend supports CORS. You can make requests directly without additional configurations on the frontend.
 
-2. **Authentication Token:**  
+2. **Authentication Token:**
+
    - The `token` returned upon successful registration is a JSON Web Token (JWT).
    - This token should be stored on the frontend (e.g., in local storage) and sent as a Bearer token in the `Authorization` header for subsequent authenticated requests (future APIs will require it).
 
-3. **Error Handling:**  
+3. **Error Handling:**
+
    - Always check for validation errors in the response when the status code is `400`.
    - Display appropriate error messages based on the `msg` field in the errors array.
 
