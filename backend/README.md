@@ -208,9 +208,7 @@ The frontend needs to send the following headers for authentication:
 }
 ```
 
----
-
-## Notes for the Frontend Developer
+## Notes
 
 - Use the Authorization header to send the token.
 - Ensure the token is valid and not blacklisted.
@@ -255,9 +253,7 @@ The frontend needs to send the following headers for authentication:
 }
 ```
 
----
-
-## Notes for the Frontend Developer
+## Notes
 
 - Clear any locally stored tokens or session data upon successful logout.
 - Ensure the Authorization header is sent for authenticated requests.
