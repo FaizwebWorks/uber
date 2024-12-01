@@ -88,6 +88,8 @@ The frontend needs to send the following data in the request body as JSON:
 }
 ```
 
+---
+
 ### 2. **Login User**
 
 **Endpoint:**  
@@ -213,6 +215,8 @@ The frontend needs to send the following headers for authentication:
 - Use the Authorization header to send the token.
 - Ensure the token is valid and not blacklisted.
 
+---
+
 ### 4. **Logout User**
 
 **Endpoint:**  
@@ -259,6 +263,8 @@ The frontend needs to send the following headers for authentication:
 - Ensure the Authorization header is sent for authenticated requests.
 
 if additional APIs require token-based authorization, ensure the token is validated and not blacklisted as demonstrated in the authUser middleware
+
+---
 
 ## Notes for the Frontend Developer
 
