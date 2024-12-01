@@ -163,6 +163,107 @@ The frontend needs to send the following data in the request body as JSON:
 
 ---
 
+### 3. **Get User Profile**
+
+**Endpoint:**  
+`GET /profile`
+
+**Description:**  
+This endpoint retrieves the authenticated user's profile information.
+
+**Request Body:**  
+The frontend needs to send the following headers for authentication:
+
+```json
+{
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+**Response:**
+
+| Status Code | Description                   | Response Body                                             |
+| ----------- | ----------------------------- | --------------------------------------------------------- |
+| 200         | User profile retrieved.       | `{ "id": "userId", "fullname": { ... }, "email": "..." }` |
+| 400         | Unauthorized (invalid token). | `{ "msg": "Unauthorized"}`                                |
+
+**Example Success Response:**
+
+```json
+{
+  "_id": "63f2d1234abc1234abc5678",
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "johndoe@example.com"
+}
+```
+
+**Example Error Response:**
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+---
+
+## Notes for the Frontend Developer
+
+- Use the Authorization header to send the token.
+- Ensure the token is valid and not blacklisted.
+
+### 4. **Logout User**
+
+**Endpoint:**  
+`GET /logout`
+
+**Description:**  
+This endpoint logs out the authenticated user by clearing the authentication cookie and blacklisting the token.
+
+**Headers:**  
+The frontend needs to send the following headers for authentication:
+
+```json
+{
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+**Response:**
+
+| Status Code | Description                   | Response Body                              |
+| ----------- | ----------------------------- | ------------------------------------------ |
+| 200         | logout successful.            | `{ "message": "Logged out successfully" }` |
+| 401         | Unauthorized (invalid token). | `{ "msg": "Unauthorized"}`                 |
+
+**Example Success Response:**
+
+```json
+{
+  "message": "Logged out successfully"
+}
+```
+
+**Example Error Response:**
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+---
+
+## Notes for the Frontend Developer
+
+- Clear any locally stored tokens or session data upon successful logout.
+- Ensure the Authorization header is sent for authenticated requests.
+
+if additional APIs require token-based authorization, ensure the token is validated and not blacklisted as demonstrated in the authUser middleware
+
 ## Notes for the Frontend Developer
 
 1. **CORS:**  
