@@ -4,9 +4,11 @@ This document outlines the APIs for the backend and provides details on how the 
 
 ---
 
+# User API Documentation
+
 ## Base URL
 
-All APIs are prefixed with `/users`. For example:
+All User APIs are prefixed with `/users`. For example:
 
 ```
 http://localhost:8000/users
@@ -263,6 +265,119 @@ The frontend needs to send the following headers for authentication:
 - Ensure the Authorization header is sent for authenticated requests.
 
 if additional APIs require token-based authorization, ensure the token is validated and not blacklisted as demonstrated in the authUser middleware
+
+---
+
+# Captain API Documentation
+
+## Base URL
+
+All Captain APIs are prefixed with `/captains`. For example:
+
+```
+http://localhost:8000/captain
+```
+
+## Endpoints
+
+### 1. **Register Captain**
+
+**Endpoint:**  
+`POST /register`
+
+**Description:**  
+This endpoint registers a new captrain in the system with vehicle informataion.
+
+**Request Body:**  
+The frontend needs to send the following data in the request body as JSON:
+
+| Field                 | Type   | Required | Description                                   |
+| --------------------- | ------ | -------- | --------------------------------------------- |
+| `fullname.firstname`  | String | Yes      | Captain's first name (min length: 3).         |
+| `fullname.lastname`   | String | No       | Captain's last name (min length: 3).          |
+| `email`               | String | Yes      | Captain's email address (valid email format). |
+| `password`            | String | Yes      | Captain's password (min length: 6).           |
+| `vehicle.color`       | String | Yes      | Vehicle color (min length: 3).                |
+| `vehicle.plate`       | String | Yes      | Vehicle plate number (min length: 3).         |
+| `vehicle.capacity`    | Number | Yes      | Vehicle capacity (min value: 1).              |
+| `vehicle.vehicleType` | String | Yes      | Vehicle type (car, motorcycle or auto).       |
+
+**Example Request Body:**
+
+```json
+{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "johndoe@example.com",
+  "password": "securePassword123",
+  "vehicle": {
+    "color": "Red",
+    "plate": "GJ 21 XY 4631",
+    "capacity": 3,
+    "vehicleType": "car"
+  }
+}
+```
+
+**Validation Rules:**
+
+- `email` must be a valid email.
+- `fullname.firstname` must have at least 3 characters.
+- `password` must have at least 6 characters.
+- `vehicle.color` and `vehicle.plate` must have at least 3 characters.
+- `vehicle.capacity` must be atleast 1.
+- `vehicle.vehicleType` must be one of `car`, `motorcycle`, or `auto`.
+
+**Response:**
+
+| Status Code | Description                      | Response Body                                       |
+| ----------- | -------------------------------- | --------------------------------------------------- |
+| 201         | Captain successfully registered. | `{ "token": "eyJIXVCJ9...", "captain": { ... } }`   |
+| 400         | Validation or duplicate error.   | `{ "errors": [ { "msg": "Error message" }, ... ] }` |
+
+**Example Success Response:**
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "captain": {
+    "_id": "674ce0cdf15f8917c4725asdvf",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "johndoe@example.com",
+    "vehicle": {
+      "color": "red",
+      "plate": "GJ 21 XY 4631",
+      "capacity": 3,
+      "vehicleType": "car"
+    }
+  }
+}
+```
+
+**Example Error Response (Validation):**
+
+```json
+{
+  "errors": [
+    { "msg": "Invalid Email" },
+    { "msg": "First name must at least 3 characters" },
+    { "msg": "Password must be at least 6 characters" }
+  ]
+}
+```
+
+**Example Error Response (Duplicate):**
+
+```json
+{
+ "message": "Captain already exists"
+}
+```
 
 ---
 
