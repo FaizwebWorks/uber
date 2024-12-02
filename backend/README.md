@@ -275,7 +275,7 @@ if additional APIs require token-based authorization, ensure the token is valida
 All Captain APIs are prefixed with `/captains`. For example:
 
 ```
-http://localhost:8000/captain
+http://localhost:8000/captains
 ```
 
 ## Endpoints
